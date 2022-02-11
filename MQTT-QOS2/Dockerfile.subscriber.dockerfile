@@ -2,7 +2,7 @@
 
 FROM python:3.10.2-slim-bullseye
 
-WORKDIR ./
+WORKDIR /app
 
 RUN pip3 install paho-mqtt
 

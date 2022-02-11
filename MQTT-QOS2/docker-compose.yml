@@ -1,24 +1,20 @@
 version: "3"
 services:
   mosquitto:
-    image: eclipse-mosquitto
-    network_mode: host
-    expose:
-      - 1883
+    image: toke/mosquitto
     ports: 
       - 1883:1883
-    volumes:
-      - ./conf:/mosquitto/conf
-      - ./data:/mosquitto/data
-      - ./log:/mosquitto/log
   client:
+    depends_on:
+      - mosquitto
     build: 
       context: ./
       dockerfile: Dockerfile.client.dockerfile
     volumes:
       - ../DataFiles:/DataFiles
-  
   subscriber:
+    depends_on:
+      - mosquitto
     build: 
       context: ./
       dockerfile: Dockerfile.subscriber.dockerfile
