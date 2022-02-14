@@ -17,14 +17,12 @@ qos=1
 data_block_size=2000
 fo1=open(filename1,"rb")
 
-fout=open("1out.txt","wb") #use a different filename
-# for outfile as I'm rnning sender and receiver together
+
 
 #define callback
 def on_message(client, userdata, message):
    time.sleep(1)
    #print("received message =",str(message.payload.decode("utf-8")))
-   fout.write(message.payload)
 
 def on_publish(client, userdata, mid):
     #logging.debug("pub ack "+ str(mid))
@@ -75,5 +73,4 @@ print("STANDARD DEVIATION IN THROUGHPUT FOR 100B FILE IS ",np.std(throughput1))
 
 client.disconnect() #disconnect
 client.loop_stop() #stop loop
-fout.close() #close files
 fo1.close()
