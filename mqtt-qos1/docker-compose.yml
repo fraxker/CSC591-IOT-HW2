@@ -9,7 +9,7 @@ services:
       - mosquitto
     build: 
       context: ./
-      dockerfile: Dockerfile.client.dockerfile
+      dockerfile: dockerfile.publisher
     volumes:
       - ../DataFiles:/DataFiles
   subscriber:
@@ -17,4 +17,4 @@ services:
       - mosquitto
     build: 
       context: ./
-      dockerfile: Dockerfile.subscriber.dockerfile
+      dockerfile: dockerfile.subscriber
