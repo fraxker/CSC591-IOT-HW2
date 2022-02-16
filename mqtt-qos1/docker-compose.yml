@@ -10,8 +10,6 @@ services:
     build: 
       context: ./
       dockerfile: dockerfile.publisher
-    volumes:
-      - ../DataFiles:/DataFiles
   subscriber:
     depends_on:
       - mosquitto

@@ -8,6 +8,6 @@ RUN pip3 install paho-mqtt
 
 RUN pip install numpy
 
-COPY publisher.py .
+COPY publisher.py . .
 
 CMD [ "python3", "publisher.py"]
