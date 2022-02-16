@@ -1,5 +1,4 @@
 from statistics import mean, stdev
-from unittest import result
 import requests
 from pathlib import Path
 import time
@@ -14,16 +13,15 @@ TenMB = DATAFILES.joinpath("10MB")
 def downlink(file: Path, repeat: int, size: int):
     times = []
     sizes = []
-    with file.open("rb") as f:
-        for _ in range(repeat):
-            start_time = time.time()
-            r = requests.post("http://server:5000", files={"upload_file": f})
-            sizes.append(r.json()["size"])
-            times.append(time.time() - start_time)
-    
-        print(file.name, "Throughput Mean in kilobits:", size * 0.008 / mean(times))
-        print(file.name, "Throughput STD in kilobits:", size * 0.008 / stdev(times))
-        print(file.name, "Packet Size Mean in kilobits:", mean(sizes) * 0.008)
+    for _ in range(repeat):
+        start_time = time.time()
+        r = requests.get("http://server:5000", json={"name": file.name})
+        sizes.append(len(r.content))
+        times.append(time.time() - start_time)
+
+    print(file.name, "Throughput Mean in kilobits:", size * 0.008 / mean(times))
+    print(file.name, "Throughput STD in kilobits:", size * 0.008 / stdev(times))
+    print(file.name, "Packet Size Mean in kilobits:", mean(sizes) * 0.008)
 
 if __name__ == "__main__":
     # Downlink 100 B file
