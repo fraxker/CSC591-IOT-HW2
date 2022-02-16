@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "80:80"
+      - "8683:8683"
+    volumes:
+      - ../DataFiles:/DataFiles
+  client:
+    depends_on:
+      - server
+    build:
+      context: .
+      dockerfile: Dockerfile.client
