@@ -1,0 +1,20 @@
+version: "3"
+services:
+  mosquitto:
+    image: toke/mosquitto
+    ports: 
+      - 1883:1883
+  client:
+    depends_on:
+      - mosquitto
+    build: 
+      context: ./
+      dockerfile: dockerfile.publisher
+    volumes:
+      - ../DataFiles:/DataFiles
+  subscriber:
+    depends_on:
+      - mosquitto
+    build: 
+      context: ./
+      dockerfile: dockerfile.subscriber
