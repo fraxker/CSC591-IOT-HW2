@@ -6,7 +6,7 @@ import paho.mqtt.client as paho
 import hashlib
 import numpy as np
 
-broker="mosquitto"
+broker="127.0.0.1"
 port=1883
 
 
@@ -14,6 +14,7 @@ port=1883
 #define callback
 def on_message(client, userdata, message):
    time.sleep(1)
+   fout.write(message.payload)
    #print("received message =",str(message.payload.decode("utf-8")))
 
 def on_publish(client, userdata, mid):
@@ -39,8 +40,10 @@ client.loop_start() #start loop to process received messages
 print("subscribing ")
 client.subscribe(topic)#subscribe
 
+fout=open("publishLog.txt","wb")
+
 filename1= "100B" # 100B file to send
-qos=1
+qos=2
 data_block_size=2000
 fo1=open(filename1,"rb")
 throughput1=[]
@@ -56,7 +59,7 @@ while count<10000:
          c_publish(client,topic,out_message,qos)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qos=2)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(0.8/time_taken) #converting throughput in 100bytes/second to kilobits/second
@@ -68,7 +71,7 @@ print("AVERAGE THROUGHPUT FOR 100B FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 100B FILE IS ",np.std(throughput1))
 
 filename1="10KB" # 10KB file to send
-qos=1
+qos=2
 data_block_size=2000
 fo1=open(filename1,"rb")
 throughput1=[]
@@ -84,7 +87,7 @@ while count<10000:
          c_publish(client,topic,out_message,qos)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qos=2)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(8/time_taken) #converting throughput in 10kilobytes/second to kilobits/second
@@ -97,7 +100,7 @@ print("STANDARD DEVIATION IN THROUGHPUT FOR 10KB FILE IS ",np.std(throughput1))
 
 
 filename1="1MB" # 1MB file to send
-qos=1
+qos=2
 data_block_size=2000
 fo1=open(filename1,"rb")
 throughput1=[]
@@ -113,7 +116,7 @@ while count<10000:
          c_publish(client,topic,out_message,qos)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qos=2)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(8000/time_taken) #converting throughput in 1megabyte/second to kilobits/second
@@ -125,7 +128,7 @@ print("AVERAGE THROUGHPUT FOR 1MB FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 1MB FILE IS ",np.std(throughput1))
 
 filename1="10MB" # 100B file to send
-qos=1
+qos=2
 data_block_size=2000
 fo1=open(filename1,"rb")
 throughput1=[]
@@ -141,7 +144,7 @@ while count<10:
          c_publish(client,topic,out_message,qos)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qos=2)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(80000/time_taken) #Converting throughput in 10MB/sec to kilobits/second
@@ -155,3 +158,4 @@ print("STANDARD DEVIATION IN THROUGHPUT FOR 10MB FILE IS ",np.std(throughput1))
 
 client.disconnect() #disconnect
 client.loop_stop() #stop loop
+fout.close()
