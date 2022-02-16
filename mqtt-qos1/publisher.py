@@ -45,7 +45,8 @@ data_block_size=2000
 fo1=open(filename1,"rb")
 throughput1=[]
 count=0
-while count<10000:
+while count<10:
+   time.sleep(2)
    start=time.time()
    Run_flag=True
    while Run_flag:
@@ -64,6 +65,7 @@ while count<10000:
    count=count+1
 fo1.close()
 
+print("THROUGHPUT VALUES ARE ",throughput1)
 print("AVERAGE THROUGHPUT FOR 100B FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 100B FILE IS ",np.std(throughput1), flush=True)
 
@@ -71,7 +73,8 @@ filename2="10KB" # 10KB file to send
 fo2=open(filename2,"rb")
 throughput1=[]
 count=0
-while count<10000:
+while count<10:
+   time.sleep(2)
    start=time.time()
    Run_flag=True
    while Run_flag:
@@ -90,6 +93,7 @@ while count<10000:
    count=count+1
 fo2.close()
 
+print("THROUGHPUT VALUES ARE ",throughput1)
 print("AVERAGE THROUGHPUT FOR 10KB FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 10KB FILE IS ",np.std(throughput1), flush=True)
 
@@ -98,7 +102,8 @@ filename3="1MB" # 1MB file to send
 fo3=open(filename3,"rb")
 throughput1=[]
 count=0
-while count<10000:
+while count<10:
+   time.sleep(2)
    start=time.time()
    Run_flag=True
    while Run_flag:
@@ -117,6 +122,7 @@ while count<10000:
    count=count+1
 fo3.close()
 
+print("THROUGHPUT VALUES ARE ",throughput1)
 print("AVERAGE THROUGHPUT FOR 1MB FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 1MB FILE IS ",np.std(throughput1), flush=True)
 
@@ -125,6 +131,7 @@ fo4=open(filename4,"rb")
 throughput1=[]
 count=0
 while count<10:
+   time.sleep(2)
    start=time.time()
    Run_flag=True
    while Run_flag:
@@ -143,6 +150,7 @@ while count<10:
    count=count+1
 fo4.close()
 
+print("THROUGHPUT VALUES ARE ",throughput1)
 print("AVERAGE THROUGHPUT FOR 10MB FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 10MB FILE IS ",np.std(throughput1), flush=True)
 
