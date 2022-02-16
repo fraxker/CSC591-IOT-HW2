@@ -19,7 +19,7 @@ port=1883
 timelive=60
 def on_connect(client, userdata, flags, rc):
   print("Connected with result code "+str(rc), flush=True)
-  client.subscribe("/data", 2)
+  client.subscribe("data", 2)
 msg_array = []
 msg_sig = False
 def on_message(client, userdata, msg):
