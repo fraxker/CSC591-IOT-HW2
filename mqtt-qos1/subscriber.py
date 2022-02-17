@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 
 def on_connect(client, userdata, flags, rc):  # The callback for when the client connects to the broker
     print("Connected with result code {0}".format(str(rc)))  # Print result of connection attempt
-    client.subscribe("my-mqtt-topic", qos=1)  # Subscribe to the topic “digitest/test1”, receive any messages published on it
+    client.subscribe("my-mqtt-topic", qos=2)  # Subscribe to the topic “digitest/test1”, receive any messages published on it
 
 
 def on_message(client, userdata, msg):  # The callback for when a PUBLISH message is received from the server.

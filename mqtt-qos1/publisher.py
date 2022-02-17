@@ -20,8 +20,8 @@ def on_publish(client, userdata, mid):
     client.mid_value=mid
     client.puback_flag=True  
 
-def c_publish(client,topic,out_message,qos):
-   res,mid=client.publish(topic,out_message,qos)
+def c_publish(client,topic,out_message,qosn):
+   res,mid=client.publish(topic,out_message,qosn)
 
 client= paho.Client("client-001")  #create client object client1.on_publish = on_publish                          #assign function to callback client1.connect(broker,port)                                 #establish connection client1.publish("data/files","on")  
 ######
@@ -39,7 +39,7 @@ print("subscribing ")
 client.subscribe(topic)#subscribe
 
 filename1= "100B" # 100B file to send
-qos=1
+qosn=2
 data_block_size=2000
 fo1=open(filename1,"rb")
 throughput1=[]
@@ -53,10 +53,10 @@ while count<10000:
       if chunk:
          out_message=chunk
          #print(" length =",type(out_message))
-         c_publish(client,topic,out_message,qos)
+         c_publish(client,topic,out_message,qosn)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qosn)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(0.8/time_taken) #converting throughput in 100bytes/second to kilobits/second
@@ -81,10 +81,10 @@ while count<1000:
       if chunk:
          out_message=chunk
          #print(" length =",type(out_message))
-         c_publish(client,topic,out_message,qos)
+         c_publish(client,topic,out_message,qosn)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qosn)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(8/time_taken) #converting throughput in 10kilobytes/second to kilobits/second
@@ -110,10 +110,10 @@ while count<100:
       if chunk:
          out_message=chunk
          #print(" length =",type(out_message))
-         c_publish(client,topic,out_message,qos)
+         c_publish(client,topic,out_message,qosn)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qosn)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(8000/time_taken) #converting throughput in 1megabyte/second to kilobits/second
@@ -138,10 +138,10 @@ while count<10:
       if chunk:
          out_message=chunk
          #print(" length =",type(out_message))
-         c_publish(client,topic,out_message,qos)
+         c_publish(client,topic,out_message,qosn)
             
       else:
-         res,mid=client.publish("my-mqtt-topic",out_message,qos=1)#publish
+         res,mid=client.publish("my-mqtt-topic",out_message,qosn)#publish
          Run_flag=False
    time_taken=time.time()-start
    throughput1.append(80000/time_taken) #Converting throughput in 10MB/sec to kilobits/second
@@ -154,5 +154,5 @@ print("AVERAGE THROUGHPUT FOR 10MB FILE IS ",np.average(throughput1))
 print("STANDARD DEVIATION IN THROUGHPUT FOR 10MB FILE IS ",np.std(throughput1), flush=True)
 
 client.loop_forever()
-client.disconnect() #disconnect
+client.disconnect() #disconnects
 client.loop_stop() #stop loop
